@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\ApiCategoryController;
+use App\Http\Controllers\Api\ApiProductController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +21,15 @@ Route::get('/welcome', function () {
 });
 
 Route::get('/', function(){
-    return view('home');
+    $api_category = new ApiCategoryController;
+    if (isset($_GET["category_id"])){
+        $category_id = $_GET["category_id"];
+    }
+    else{
+        $category_id = 1;
+    }
+    $api_product = new ApiProductController;
+    
+    return view('home', ['category' => $api_category->select($category_id),
+                         'products' => $api_product->index()]);
 });

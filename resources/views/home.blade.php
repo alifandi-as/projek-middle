@@ -1,4 +1,6 @@
-
+<?php
+    use Illuminate\Support\Facades\Session;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,21 +11,27 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand">
-            <img src="{{ asset('assets/images/Logo.png') }}" width="32px" height="28px">
-            Tugas Projek Middle
-        </a>
-        <form class="d-flex" role="search">
-            <button class="btn btn-white" type="submit">Beranda</button>
-            <button class="btn btn-yellow" type="submit">Makanan</button>
-        </form>
-    </div>
-    </nav>
+    <x-layout.header/>
     <div class="food-page">
-        <h1>test</h1>
+    <h1>{{ $category->original["category"] }}</h1>
+    @foreach($products->original as $key => $value)
+        <div class="container row card_container">
+            <div class="col-md-4">
+                <div class="col-md-4 card shadow-sm h-100" style="width: 100%;">
+                    <img src={{$value["image"]}} class="card-img-top" alt="..." height="150px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{$value["name"]}}</h5>
+                        <p class="card-text"><?=substr($value["description"],0,140)?>...</p>
+                        <a href="/view/?product_id={{$value["id"]}}" class="btn btn-primary">{{'$' . $value["price"]}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
     </div>
+
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 </body>
@@ -32,5 +40,8 @@
 <style>
 .food-page{
     text-align: center;
+    padding: 15px;
+    background: #afa;
 }
+
 </style>
