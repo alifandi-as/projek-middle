@@ -63,12 +63,13 @@ Route::controller(ApiOrderController::class)
 ->prefix("/categories")
 ->group(function(){
     Route::get("/", "index")->middleware("admin-middleware");
-    Route::get("/{id}", "select")->middleware("token-middleware");
+    Route::get("/{id}", "select")->middleware("order-middleware");
+    Route::get("/user", "select_user")->middleware("order-middleware");
     Route::get("/{id}/{order_id}", "select_order")->middleware("token-middleware");
-    Route::put("/add/{id}", "add")->middleware("token-middleware");
-    Route::put("/multi/add", "multi_add")->middleware("token-middleware");
-    Route::post("/edit/{id}", "edit")->middleware("admin-middleware");
-    Route::post("/multi/edit", "multi_edit")->middleware("admin-middleware");
-    Route::delete("/delete/{id}", "delete")->middleware("order-del-middleware");
-    Route::delete("/multi/delete", "multi_delete")->middleware("order-del-middleware");
+    Route::put("/add/{id}", "add")->middleware("order-middleware");
+    Route::put("/multi/add", "multi_add")->middleware("order-middleware");
+    Route::post("/edit/{id}", "edit")->middleware("order-middleware");
+    Route::post("/multi/edit", "multi_edit")->middleware("order-middleware");
+    Route::delete("/delete/{id}", "delete")->middleware("order-middleware");
+    Route::delete("/multi/delete", "multi_delete")->middleware("order-middleware");
 });

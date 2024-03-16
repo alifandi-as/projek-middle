@@ -7,7 +7,7 @@ use App\Models\Order;
 use App\Models\UserData;
 use Illuminate\Http\Request;
 
-class OrderDelMiddleware
+class OrderMiddleware
 {
     /**
      * Handle an incoming request.

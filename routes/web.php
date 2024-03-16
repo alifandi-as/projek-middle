@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\ApiCategoryController;
-use App\Http\Controllers\Api\ApiProductController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ApiOrderController;
+use App\Http\Controllers\Api\ApiProductController;
+use App\Http\Controllers\Api\ApiCategoryController;
 
 
 /*
@@ -32,4 +34,11 @@ Route::get('/', function(){
     
     return view('home', ['category' => $api_category->select($category_id),
                          'products' => $api_product->index()]);
+});
+
+Route::get("/order/{product_id}", function($product_id, Request $request){
+    $api_order = new ApiOrderController;
+    $request->merge(["user_id" => ""]);
+    $api_order->add($request);
+    return redirect()->back();
 });

@@ -13,21 +13,28 @@
 <body>
     <x-layout.header/>
     <div class="food-page">
-    <h1>{{ $category->original["category"] }}</h1>
-    @foreach($products->original as $key => $value)
-        <div class="container row card_container">
-            <div class="col-md-4">
-                <div class="col-md-4 card shadow-sm h-100" style="width: 100%;">
+    <h1 class="category">{{ $category->original["category"] }}</h1>
+    <div class="container row card_container">
+        @foreach($products->original as $key => $value)
+            <div class="col-md-3">
+                <div class="col-md-3 card shadow-sm h-100" style="width: 100%;">
                     <img src={{$value["image"]}} class="card-img-top" alt="..." height="150px">
                     <div class="card-body">
                         <h5 class="card-title">{{$value["name"]}}</h5>
                         <p class="card-text"><?=substr($value["description"],0,140)?>...</p>
-                        <a href="/view/?product_id={{$value["id"]}}" class="btn btn-primary">{{'$' . $value["price"]}}</a>
+                        <a href="/order/{{$value["id"]}}" class="btn btn-primary">
+                            @if($value["piece"] <= 1)
+                                {{'$' . $value["price"]}}
+                            @else
+                                {{'$' . $value["price"] . "/" . $value["piece"] . " pcs"}}
+                            @endif
+                        </a>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
-    @endforeach
+
     </div>
 
 
@@ -38,10 +45,26 @@
 </html>
 
 <style>
+body{
+    background: #afa;
+}
 .food-page{
     text-align: center;
     padding: 15px;
-    background: #afa;
+
+    position: relative;
+    /* display: flex;
+    justify-content: center; */
+}
+.container{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.category{
+    margin-top: 10px;
+    margin-bottom: 25px;
 }
 
 </style>
