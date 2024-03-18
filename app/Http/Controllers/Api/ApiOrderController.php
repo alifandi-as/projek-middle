@@ -28,9 +28,9 @@ class ApiOrderController extends ApiController
             "id" => $id,
             "user_id" => $request->user_id,
             "food_id" => $request->food_id,
-            "order_id" => $request->order_id,
             "quantity" => $request->quantity,
-            "price" => $request->price
+            "price" => $request->price,
+            "done" => 0
         ]);
         return $this->send_success("Your order has been processed.");
     
@@ -42,9 +42,9 @@ class ApiOrderController extends ApiController
                 "id" => $item["id"],
                 "user_id" => $item["user_id"],
                 "food_id" => $item["food_id"],
-                "order_id" => $item["order_id"],
                 "quantity" => $item["quantity"],
-                "price" => $item["price"]
+                "price" => $item["price"],
+                "done" => 0
             ]);
         }
         
@@ -60,7 +60,6 @@ class ApiOrderController extends ApiController
             "id" => $id,
             "user_id" => $request->user_id,
             "food_id" => $request->food_id,
-            "order_id" => $request->order_id,
             "quantity" => $request->quantity,
             "price" => $request->price
         ]);
@@ -78,7 +77,6 @@ class ApiOrderController extends ApiController
                 "id" => $item["id"],
                 "user_id" => $item["user_id"],
                 "food_id" => $item["food_id"],
-                "order_id" => $item["order_id"],
                 "quantity" => $item["quantity"],
                 "price" => $item["price"]
             ]);

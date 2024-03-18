@@ -25,12 +25,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(ApiUserController::class)
 ->prefix("/users")
 ->group(function(){
-    Route::post("/", "index")->middleware("token-middleware");
-    Route::post("/login", "login")->middleware("login-middleware");
-    Route::put("/register", "register");
+    Route::post("/", "index")->middleware("admin-middleware");
+    Route::post("/", "index_user")->middleware("token-middleware");
+    Route::post("/login", "login");
+    Route::post("/register", "register");
     Route::post("/edit", "edit")->middleware("token-middleware");
     Route::get("/logout", "logout");
-    Route::delete("/delete", "delete")->middleware("token-middleware");
+    Route::post("/delete", "delete")->middleware("token-middleware");
 });
 
 Route::controller(ApiProductController::class)
@@ -65,7 +66,6 @@ Route::controller(ApiOrderController::class)
     Route::get("/", "index")->middleware("admin-middleware");
     Route::get("/{id}", "select")->middleware("order-middleware");
     Route::get("/user", "select_user")->middleware("order-middleware");
-    Route::get("/{id}/{order_id}", "select_order")->middleware("token-middleware");
     Route::put("/add/{id}", "add")->middleware("order-middleware");
     Route::put("/multi/add", "multi_add")->middleware("order-middleware");
     Route::post("/edit/{id}", "edit")->middleware("order-middleware");

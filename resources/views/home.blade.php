@@ -1,6 +1,3 @@
-<?php
-    use Illuminate\Support\Facades\Session;
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,13 +19,12 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$value["name"]}}</h5>
                         <p class="card-text"><?=substr($value["description"],0,140)?>...</p>
-                        <a href="/order/{{$value["id"]}}" class="btn btn-primary">
-                            @if($value["piece"] <= 1)
-                                {{'$' . $value["price"]}}
-                            @else
-                                {{'$' . $value["price"] . "/" . $value["piece"] . " pcs"}}
-                            @endif
-                        </a>
+                        <form action="/order/{{$value["id"]}}" method="GET">
+                            @csrf
+                            <input type="number" name="quantity" value="1" id="quantity">
+                            <input type="submit" name="order" class="btn btn-primary" value="@if($value["piece"] <= 1) {{'$' . $value["price"]}} @else {{'$' . $value["price"] . "/" . $value["piece"] . " pcs"}} @endif">
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -41,6 +37,9 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <script>
+        
+    </script>
 </body>
 </html>
 
@@ -65,6 +64,10 @@ body{
 .category{
     margin-top: 10px;
     margin-bottom: 25px;
+}
+
+#quantity{
+    width: 40px;
 }
 
 </style>
