@@ -1,30 +1,21 @@
 <?php
 
-namespace App\Http\Controllers\Api\User;
+namespace App\Http\Controllers;
 
 use App\Models\UserData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Controllers\ApiController;
+use App\Http\MessageAlert;
 
-class ApiUserController extends ApiController
+class WebUserController extends MessageAlert
 {
-    public function index(Request $request){
+    public function show(Request $request){
         
         $user_list = UserData::query()
-        ->get()
-        ->toArray();
-
-        return $this->send_success($user_list);
-    }
-
-    public function show(Request $request, $id){
-        
-        $user_list = UserData::query()
-        ->where("remember_token", "=", $id)
+        ->where("remember_token", "=", session()->get("token"))
         ->get();
 
-        return $this->send_success($user_list[0]);
+        return MessageAlert::send_success($user_list[0]);
     }
     
     public function login(Request $request){
@@ -58,13 +49,13 @@ class ApiUserController extends ApiController
                     ->toArray()[0];
                     $request->session()->put("token", $user);
                     return redirect("/");
-                    // return $this->send_success("You have logged in.");
+                    // return MessageAlert::send_success("You have logged in.");
                 }
             }
 
         }
 
-        return $this->send_unauthorized("Incorrect email or password");
+        return MessageAlert::send_unauthorized("Incorrect email or password");
 
         
     }
@@ -92,37 +83,15 @@ class ApiUserController extends ApiController
             "email" => $email,
         ]);
 
+        session()->put("token", $token);
+
         return $this->send_success("Registration successful");
-    }
-
-    public function edit(Request $request){
-        $name = $request->name;
-        $password = Hash::make($request->password);
-        $token = sha1($password);
-        $email = $request->email;
-
-        UserData::query()
-        ->where("id", "=", UserData::query()
-            ->where("remember_token", "=", $request->token)
-            ->get()
-            ->pluck("id")
-            ->toArray()[0]
-        )
-        ->take(1)
-        ->update([
-            "name" => $name,
-            "password" => $password,
-            "remember_token" => $token,
-            "email" => $email,
-        ]);
-        return $this->send_success("Edit complete.");
-    
     }
 
     public function logout(Request $request){
         $request->session()->forget("token");
 
-        return $this->send_success("You have logged out.");
+        return MessageAlert::send_success("You have logged out.");
     }
 
     public function delete(Request $request){
@@ -131,6 +100,6 @@ class ApiUserController extends ApiController
         ->where("remember_token", "=", $request->token)
         ->take(1)
         ->delete();
-        return $this->send_success("Your account has been deleted");
+        return MessageAlert::send_success("Your account has been deleted");
     }
 }

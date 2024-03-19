@@ -8,7 +8,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
-    <x-layout.header/>
+    <x-layout.header>
+        @if(isset($user))
+            <a href="/profile" class="btn btn-primary" type="submit">{{$user["name"]}}</a>
+        @else
+            <a href="/login" class="btn btn-warning" type="submit">Login</a>
+        @endif
+    </x-layout.header>
     <div class="food-page">
     <h1 class="category">{{ $category->original["category"] }}</h1>
     <div class="container row card_container">

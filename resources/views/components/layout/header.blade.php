@@ -5,13 +5,10 @@
             Tugas Projek Middle
         </a>
         <form class="d-flex" role="search">
-            @if(isset($user))
-                <button class="btn btn-white" type="submit">test</button>
-            @endif
-            {{session()->get("token")}}
+            {{$slot}}
             <button class="btn btn-white" type="submit">Beranda</button>
             <button class="btn btn-yellow" type="submit">Makanan</button>
-            <a href="/login" class="btn btn-yellow" type="submit">Akun</a>
+            <!-- <a href="/login" class="btn btn-yellow" type="submit">Akun</a> -->
         </form>
     </div>
     </nav>

@@ -11,7 +11,7 @@
         <div class="login-box">
             <div class="login-container">
                 <h1>Login Page</h1><br>
-                <form action="api/users/login" method="POST">
+                <form action="users/login" method="POST">
                     @csrf
                     <label>Username:</label> <input type="text" required name="name" class="input-box"><br>
                     <label>Email:</label> <input type="text" required name="email" class="input-box"><br>
@@ -26,7 +26,8 @@
                         </div>
                     @endif
                     
-                    <input type="submit" required name="login" value="Login" class="input-btn btn btn-primary">
+                    <a href="/" name="register" class="input-btn btn btn-secondary">Back</a>
+                    <input type="submit" name="login" value="Login" class="input-btn btn btn-primary">
                     <input type="submit" name="register" value="Register" class="input-btn btn btn-secondary" formaction="api/users/register">
                 </form>
             </div>

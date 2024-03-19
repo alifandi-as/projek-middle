@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiOrderController;
 use App\Http\Controllers\Api\ApiProductController;
 use App\Http\Controllers\Api\ApiCategoryController;
 use App\Http\Controllers\Api\User\ApiUserController;
+use App\Http\Controllers\Api\User\WebUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,10 @@ Route::controller(ApiUserController::class)
 ->prefix("/users")
 ->group(function(){
     Route::post("/", "index")->middleware("admin-middleware");
-    Route::post("/", "index_user")->middleware("token-middleware");
-    Route::post("/login", "login");
-    Route::post("/register", "register");
-    Route::post("/edit", "edit")->middleware("token-middleware");
-    Route::get("/logout", "logout");
-    Route::post("/delete", "delete")->middleware("token-middleware");
+    Route::post("/{id}", "show")->middleware("admin-middleware");
+    Route::post("/create/{id}", "create")->middleware("admin-middleware");
+    Route::post("/edit/{id}", "edit")->middleware("admin-middleware");
+    Route::delete("/destroy/{id}", "destroy")->middleware("admin-middleware");
 });
 
 Route::controller(ApiProductController::class)
