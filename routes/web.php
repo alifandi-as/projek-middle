@@ -31,10 +31,10 @@ Route::get('/welcome', function () {
 Route::get('/', function(){
     $api_category = new ApiCategoryController;
     if (isset($_GET["category_id"])){
-        $category_id = $_GET["category_id"];
+        $category_id = $_GET["category_id"] - 1;
     }
     else{
-        $category_id = 1;
+        $category_id = 0;
     }
     $api_product = new ApiProductController;
     $token = session()->get("token");
@@ -49,8 +49,9 @@ Route::get('/', function(){
     }
     // dd($user);
     // ddd(session()->get("token"));
-    return view('home', ['category' => $api_category->select($category_id),
-                         'products' => $api_product->index(),
+    return view('home', ['category' => $api_category->index(),
+                         'category_id' => $category_id,
+                         'products' => $api_product->select_category($category_id + 1),
                          'user' => $user]);
 });
 

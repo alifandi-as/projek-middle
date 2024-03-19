@@ -38,6 +38,7 @@ Route::controller(ApiProductController::class)
 ->group(function(){
     Route::get("/", "index");
     Route::get("/select/{id}", "select");
+    Route::get("/select_category/{id}", "select_category");
     Route::put("/add/{id}", "add")->middleware("admin-middleware");
     Route::put("/multi/add", "multi_add")->middleware("admin-middleware");
     Route::post("/edit/{id}", "edit")->middleware("admin-middleware");

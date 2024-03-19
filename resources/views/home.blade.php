@@ -9,14 +9,24 @@
 </head>
 <body>
     <x-layout.header>
+
         @if(isset($user))
             <a href="/profile" class="btn btn-primary" type="submit">{{$user["name"]}}</a>
         @else
             <a href="/login" class="btn btn-warning" type="submit">Login</a>
         @endif
+        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Makanan
+        </a>
+        <ul class="dropdown-menu">
+            @foreach($category->original as $key => $value)
+                <li><a href={{"?category_id=".$value["id"]}} class="dropdown-item" >{{$value["category"]}}</a></li>
+            @endforeach
+        </ul>
     </x-layout.header>
+
     <div class="food-page">
-    <h1 class="category">{{ $category->original["category"] }}</h1>
+    <h1 class="category">{{ $category->original["$category_id"]["category"] }}</h1>
     <div class="container row card_container">
         @foreach($products->original as $key => $value)
             <div class="col-md-3">
@@ -76,4 +86,65 @@ body{
     width: 40px;
 }
 
+
+
+.custom-select {
+  position: relative;
+  font-family: Arial;
+}
+
+.custom-select select {
+  display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+  background-color: DodgerBlue;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 14px;
+  right: 10px;
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-color: #fff transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+  color: #ffffff;
+  padding: 8px 16px;
+  border: 1px solid transparent;
+  border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  background-color: DodgerBlue;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+  background-color: rgba(0, 0, 0, 0.1);
+}
 </style>

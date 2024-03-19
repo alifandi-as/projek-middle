@@ -7,7 +7,7 @@
         <form class="d-flex" role="search">
             {{$slot}}
             <button class="btn btn-white" type="submit">Beranda</button>
-            <button class="btn btn-yellow" type="submit">Makanan</button>
+            {{-- <button class="btn btn-yellow" type="submit">Makanan</button> --}}
             <!-- <a href="/login" class="btn btn-yellow" type="submit">Akun</a> -->
         </form>
     </div>

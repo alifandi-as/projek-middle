@@ -16,7 +16,7 @@ class ApiProductController extends ApiController
         return $this->send_success($product);
     }
 
-    public function select_categorical($category_id = 0){
+    public function select_category($category_id = 1){
         $product = Product::query()
         ->where("category_id", "=", $category_id)
         ->get()
