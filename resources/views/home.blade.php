@@ -10,8 +10,8 @@
 <body>
     <x-layout.header>
 
-        @if(isset($user))
-            <a href="/profile" class="btn btn-primary" type="submit">{{$user["name"]}}</a>
+        @if(auth()->check())
+            <a href="/profile" class="btn btn-primary" type="submit">{{auth()->user()->name}}</a>
         @else
             <a href="/login" class="btn btn-warning" type="submit">Login</a>
         @endif

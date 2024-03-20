@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserData;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use App\Http\MessageAlert;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class WebUserController extends MessageAlert
 {
@@ -35,8 +36,23 @@ class WebUserController extends MessageAlert
             ->pluck("password")
             ->toArray();
 
+            $credentials = request(["name", "email", "password"]);
+
+            if(Auth::attempt($credentials)){
+                $user = UserData::query()
+                ->where("name", "=", $request->name)
+                ->where("email", "=", $request->email)
+                ->get()
+                ->pluck("remember_token")
+                ->toArray()[0];
+                // $request->session()->put("token", $user);
+                $token = $request->user()->createToken($user_password[0]);
+                return redirect("/");
+                // return MessageAlert::send_success("You have logged in.");
+            }
+
             // If password exists
-            if(count($user_password) >= 1){
+            /*if(count($user_password) >= 1){
                 $user_password = $user_password[0];
 
                 // If password isn't null & password is correct
@@ -51,7 +67,7 @@ class WebUserController extends MessageAlert
                     return redirect("/");
                     // return MessageAlert::send_success("You have logged in.");
                 }
-            }
+            }*/
 
         }
 
@@ -89,7 +105,9 @@ class WebUserController extends MessageAlert
     }
 
     public function logout(Request $request){
-        $request->session()->forget("token");
+        // $request->session()->forget("token");
+        auth()->user()->tokens()->delete();
+        auth()->logout();
 
         return MessageAlert::send_success("You have logged out.");
     }

@@ -61,7 +61,7 @@ Route::controller(ApiCategoryController::class)
 });
 
 Route::controller(ApiOrderController::class)
-->prefix("/categories")
+->prefix("/orders")
 ->group(function(){
     Route::get("/", "index")->middleware("admin-middleware");
     Route::get("/{id}", "select")->middleware("order-middleware");
