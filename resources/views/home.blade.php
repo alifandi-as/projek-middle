@@ -38,7 +38,7 @@
                         <form action="/order/{{$value["id"]}}" method="GET">
                             @csrf
                             <input type="number" name="quantity" value="1" id="quantity">
-                            <input type="submit" name="order" class="btn btn-primary" value="@if($value["piece"] <= 1) {{'$' . $value["price"]}} @else {{'$' . $value["price"] . "/" . $value["piece"] . " pcs"}} @endif">
+                            <button type="submit" name="price" class="btn btn-primary" value={{$value["price"] * $value["piece"]}}>@if($value["piece"] <= 1) {{'$' . $value["price"]}} @else {{'$' . $value["price"] . "/" . $value["piece"] . " pcs"}} @endif</button>
                         </form>
 
                     </div>
