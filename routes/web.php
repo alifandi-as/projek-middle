@@ -38,26 +38,25 @@ Route::get('/', function(){
     }
     $api_product = new ApiProductController;
     $token = session()->get("token");
-    if(isset($token)){
-        $user = UserData::query()
-        ->where("remember_token", "=", session()->get("token"))
-        ->get()
-        ->toArray()[0];
-    }
-    else{
-        $user = null;
-    }
+    // if(isset($token)){
+    //     $user = UserData::query()
+    //     ->where("remember_token", "=", session()->get("token"))
+    //     ->get()
+    //     ->toArray()[0];
+    // }
+    // else{
+    //     $user = null;
+    // }
     // dd($user);
     // ddd(session()->get("token"));
     return view('home', ['category' => $api_category->index(),
                          'category_id' => $category_id,
-                         'products' => $api_product->select_category($category_id + 1),
-                         'user' => $user]);
+                         'products' => $api_product->select_category($category_id + 1)]);
 });
 
 Route::get('/login', function(){
     return view("public/login");
-});
+})->name('login');
 
 Route::get("/order/{product_id}", function($product_id, Request $request){
     if(session()->get("token")){
@@ -76,10 +75,11 @@ Route::get("/order/{product_id}", function($product_id, Request $request){
             ->pluck("price")
             ->toArray()[0]]
         );
-        $api_order->add($request);
+        
     }
+
     
-    return redirect()->back();
+    return $api_order->add($request);
 });
 
 Route::controller(WebUserController::class)

@@ -64,9 +64,10 @@ Route::controller(ApiOrderController::class)
 ->prefix("/orders")
 ->group(function(){
     Route::get("/", "index")->middleware("admin-middleware");
-    Route::get("/{id}", "select")->middleware("order-middleware");
+    Route::get("/select/{id}", "select")->middleware("order-middleware");
     Route::get("/user", "select_user")->middleware("order-middleware");
     Route::put("/add/{id}", "add")->middleware("order-middleware");
+    Route::get("/add", "add")->middleware('auth:sanctum');
     Route::put("/multi/add", "multi_add")->middleware("order-middleware");
     Route::post("/edit/{id}", "edit")->middleware("order-middleware");
     Route::post("/multi/edit", "multi_edit")->middleware("order-middleware");

@@ -35,8 +35,10 @@
                     <div class="card-body">
                         <h5 class="card-title">{{$value["name"]}}</h5>
                         <p class="card-text"><?=substr($value["description"],0,140)?>...</p>
-                        <form action="/order/{{$value["id"]}}" method="GET">
+                        <form action="/api/orders/add/" method="GET">
                             @csrf
+                            <input type="hidden" name="user_id" value={{auth()->id()}}>
+                            <input type="hidden" name="food_id" value={{$value["id"]}}>
                             <input type="number" name="quantity" value="1" id="quantity">
                             <button type="submit" name="price" class="btn btn-primary" value={{$value["price"] * $value["piece"]}}>@if($value["piece"] <= 1) {{'$' . $value["price"]}} @else {{'$' . $value["price"] . "/" . $value["piece"] . " pcs"}} @endif</button>
                         </form>
