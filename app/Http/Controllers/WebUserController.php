@@ -45,8 +45,9 @@ class WebUserController extends MessageAlert
                 ->get()
                 ->pluck("remember_token")
                 ->toArray()[0];
-                // $request->session()->put("token", $user);
-                $token = $request->user()->createToken($user_password[0]);
+                
+                $token = $request->user()->createToken($request->name);
+                $request->session()->put($request->name, $token->plainTextToken);
                 return redirect("/");
                 // return MessageAlert::send_success("You have logged in.");
             }
