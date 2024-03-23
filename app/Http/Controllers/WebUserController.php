@@ -24,30 +24,31 @@ class WebUserController extends MessageAlert
         if(isset($request->email)){
 
             // Authorization
-            $request->validate([
+            $form_fields = $request->validate([
                 'name' => 'required',
                 'email' => 'required',
                 'password' => 'required'
             ]);
-            $user_password = UserData::query()
-            ->where("name", "=", $request->name)
-            ->where("email", "=", $request->email)
-            ->get()
-            ->pluck("password")
-            ->toArray();
+            // $user_password = UserData::query()
+            // ->where("name", "=", $request->name)
+            // ->where("email", "=", $request->email)
+            // ->get()
+            // ->pluck("password")
+            // ->toArray();
 
-            $credentials = request(["name", "email", "password"]);
+            //$credentials = request(["name", "email", "password"]);
 
-            if(Auth::attempt($credentials)){
-                $user = UserData::query()
-                ->where("name", "=", $request->name)
-                ->where("email", "=", $request->email)
-                ->get()
-                ->pluck("remember_token")
-                ->toArray()[0];
+            if(Auth::attempt($form_fields)){
+                // $user = UserData::query()
+                // ->where("name", "=", $request->name)
+                // ->where("email", "=", $request->email)
+                // ->get()
+                // ->pluck("remember_token")
+                // ->toArray()[0];
                 
                 $token = $request->user()->createToken($request->name);
-                $request->session()->put($request->name, $token->plainTextToken);
+                session()->put("token", $token->plainTextToken);
+                $request->session()->regenerate();
                 return redirect("/");
                 // return MessageAlert::send_success("You have logged in.");
             }
@@ -93,14 +94,16 @@ class WebUserController extends MessageAlert
         // $token = sha1($password);
         // $email = filter_input(INPUT_POST, $request->email, FILTER_SANITIZE_EMAIL);
         
-        UserData::create([
+        $user = UserData::create([
             "name" => $name,
             "password" => $password,
             "remember_token" => $token,
             "email" => $email,
         ]);
 
-        session()->put("token", $token);
+        //session()->put("token", $token);
+        auth()->login($user);
+        
 
         return $this->send_success("Registration successful");
     }

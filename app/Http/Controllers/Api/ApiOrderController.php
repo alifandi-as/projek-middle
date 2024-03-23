@@ -24,15 +24,7 @@ class ApiOrderController extends ApiController
     }
 
     public function add(Request $request, $id = null){
-        Order::create([
-            "id" => $id,
-            "user_id" => $request->user_id,
-            "food_id" => $request->food_id,
-            "quantity" => $request->quantity,
-            "price" => $request->price,
-            "done" => 0
-        ]);
-        return $this->send_success("Your order has been processed.");
+        return $request->_token;
     
     }
 

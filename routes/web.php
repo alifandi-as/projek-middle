@@ -56,7 +56,7 @@ Route::get('/', function(){
 
 Route::get('/login', function(){
     return view("public/login");
-})->name('login');
+})->name('login')->middleware('guest');
 
 Route::get("/order/{product_id}", function($product_id, Request $request){
     if(session()->get("token")){

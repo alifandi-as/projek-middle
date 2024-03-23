@@ -18,14 +18,17 @@ class TokenMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if(isset(UserData::query()
-            ->where("remember_token", "=", $request->token)
-            ->get()
-            ->pluck("remember_token")
-            ->toArray()[0])){
-            return $next($request);
-        }
-        return MessageAlert::send_unauthorized();
+        $response = $next($request);
+        $response->headers->set('Authorization', 'Bearer '.session()->get("token"));
+        return $next($request);
+        // if(isset(UserData::query()
+        //     ->where("remember_token", "=", $request->token)
+        //     ->get()
+        //     ->pluck("remember_token")
+        //     ->toArray()[0])){
+        //     return $next($request);
+        // }
+        // return MessageAlert::send_unauthorized();
 
     }
 }
