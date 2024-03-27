@@ -28,7 +28,7 @@
                     
                     <a href="/" name="register" class="input-btn btn btn-secondary">Back</a>
                     <input type="submit" name="login" value="Login" class="input-btn btn btn-primary">
-                    <input type="submit" name="register" value="Register" class="input-btn btn btn-secondary" formaction="api/users/register">
+                    <input type="submit" name="register" value="Register" class="input-btn btn btn-secondary" formaction="users/register">
                 </form>
             </div>
         </div>

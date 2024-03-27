@@ -11,7 +11,7 @@
     <x-layout.header>
 
         @if(auth()->check())
-            <a href="/profile" class="btn btn-primary" type="submit">{{session()->get("token");}}</a>
+            <a href="/profile" class="btn btn-primary" type="submit">{{auth()->user()->name;}}</a>
         @else
             <a href="/login" class="btn btn-warning" type="submit">Login</a>
         @endif
